@@ -528,6 +528,211 @@ To overcome the fail-fast problem in Java collections, you can take the followin
 
 **Note** If you remove an element via Iterator remove() method, exception will not be thrown. However, in case of removing via a particular collection remove() method, ConcurrentModificationException will be thrown. Below code snippet will demonstrate this:
 
+### Set
+It is an unordered collection of objects in which duplicate values cannot be stored. It is an interface that implements the mathematical set.
+```
+public interface Set<E> extends Collection<E> {
+```
+![](https://media.geeksforgeeks.org/wp-content/uploads/20200911123402/HashSetLinkedHashSetinJava.png)
+
+### Hashset 
+```
+public class HashSet<E> extends AbstractSet<E>
+    implements Set<E>,Cloneable, java.io.Serializable{
+
+    private transient HashMap<E,Object> map;
+```
+HashSet internally uses a HashMap to store its elements. The elements are stored as keys in the HashMap, with a fixed value (usually a dummy object) associated with each key.
+
+```
+package org.learning.collection;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+public class SetDemo {
+    public static void main(String[] args) {
+        Set<Integer> a = new HashSet<Integer>(List.of( 1, 3, 2, 4, 8, 9, 0 ));
+
+        Set<Integer> b = new HashSet<Integer>(List.of( 1, 3, 7, 5, 4, 0, 7, 5));
+
+        Set<Integer> union = new HashSet<Integer>(a);
+        union.addAll(b);
+        System.out.print("Union of the two Set");
+        System.out.println(union);
+
+        // To find intersection
+        Set<Integer> intersection = new HashSet<Integer>(a);
+        intersection.retainAll(b);
+        System.out.print("Intersection of the two Set");
+        System.out.println(intersection);
+
+        // To find the symmetric difference
+        Set<Integer> difference = new HashSet<Integer>(a);
+        difference.removeAll(b);
+        System.out.print("Difference of the two Set");
+        System.out.println(difference);
+    }
+}
+```
+Output: 
+```
+Union of the two Set[0, 1, 2, 3, 4, 5, 7, 8, 9]
+Intersection of the two Set[0, 1, 3, 4]
+Difference of the two Set[2, 8, 9]
+```
+### TreeSet
+```
+public class TreeSet<E> extends AbstractSet<E>
+    implements NavigableSet<E>, Cloneable, java.io.Serializable
+    
+    private transient NavigableMap<E,Object> m;
+    private static final Object PRESENT = new Object();
+```
+- TreeSet in Java is implemented using a self-balancing binary search tree called Red-Black Tree.
+- The elements in the TreeSet are arranged in a sorted order based on their natural ordering (if they implement the Comparable interface)
+- time complexity O(log n)
+
+### LinkedHasSet 
+The LinkedHashSet is an ordered version of HashSet that maintains a doubly-linked List across all elements.
+
+### CopyOnWriteArraySet
+- It is a Set that uses an internal CopyOnWriteArrayList for all of its operations
+- thread-safe version of Set
+
+### Enum set 
+- Serve the purpose of representing a group of named constants in a programming language
+- Not thread safe 
+```
+import java.util.EnumSet;
+
+enum Size {
+    SMALL, MEDIUM, LARGE, EXTRALARGE
+}
+
+public class EnumSetDemo {
+
+    public static void main(String[] args) {
+        EnumSet<Size> enumSet = EnumSet.allOf(Size.class);
+
+        System.out.println(enumSet);
+
+    }
+}
+```
+Output
+```
+[SMALL, MEDIUM, LARGE, EXTRALARGE]
+```
+
+### Dequeue 
+- The Deque is related to the double-ended queue that supports the addition or removal of elements from either end of the data structure.
+- It can either be used as a queue(first-in-first-out/FIFO) or as a stack(last-in-first-out/LIFO).
+- Advantages
+  - Double-Ended: The main advantage of the Deque interface is that it provides a double-ended queue, which allows elements to be added and removed from both ends of the queue. This makes it a good choice for scenarios where you need to insert or remove elements at both the front and end of the queue.
+  - Flexibility: The Deque interface provides a number of methods for adding, removing, and retrieving elements from both ends of the queue, giving you a great deal of flexibility in how you use it.
+  - Blocking Operations: The Deque interface provides blocking methods, such as takeFirst and takeLast, that allow you to wait for elements to become available or for space to become available in the queue. This makes it a good choice for concurrent and multithreaded applications.
+- Disadvantages
+  - Performance: The performance of a Deque can be slower than other data structures, such as a linked list or an array, because it provides more functionality.
+
+![](https://media.geeksforgeeks.org/wp-content/cdn-uploads/20200903183026/Queue-Deque-PriorityQueue-In-Java.png)
+
+#### Array Dequeue 
+```
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+public class DequeDemo {
+    public static void main(String[] args) {
+        Deque<Integer> deque = new ArrayDeque<>();
+        deque.addFirst(1);
+        deque.addLast(2);
+        int first = deque.removeFirst();
+        int last = deque.removeLast();
+        System.out.println("First: " + first + ", Last: " + last);
+    }
+}
+```
+
+#### Linklist Dequeu 
+```
+package org.learning.collection;
+
+import java.util.Deque;
+import java.util.LinkedList;
+
+public class DequeLinkListDemo {
+    public static void main(String[] args) {
+        Deque<String> deque
+                = new LinkedList<String>();
+
+        // Add at the last
+        deque.add("Element 1 (Tail)");
+
+        // Add at the first
+        deque.addFirst("Element 2 (Head)");
+
+        // Add at the last
+        deque.addLast("Element 3 (Tail)");
+
+        // Add at the first
+        deque.push("Element 4 (Head)");
+
+        // Add at the last
+        deque.offer("Element 5 (Tail)");
+
+        // Add at the first
+        deque.offerFirst("Element 6 (Head)");
+
+        System.out.println(deque + "\n");
+
+        // We can remove the first element
+        // or the last element.
+        deque.removeFirst();
+        deque.removeLast();
+        System.out.println("Deque after removing "
+                + "first and last: "
+                + deque);
+    }
+}
+```
+|Feature|ArrayDeque|LinkedList|
+|---|---|---|
+|Implementation|Resizeable array|Linked list|
+|Null elements|Not allowed|Allowed|
+|Efficiency|More efficient for add and remove operations at both ends|Less efficient for add and remove operations at both ends|
+|Memory consumption|Less memory-intensive|More memory-intensive|
+|Best use cases|Applications that require efficient add and remove operations at both ends|Applications that require the ability to store null elements or that need to iterate over the elements in the deque in a specific order|
+
+### Atmoic classes
+- A shared entity such as, mutable object or variable, might be changed, which may result in the inconsistency of the program or database. So, it becomes crucial to deal with the shared entity while accessed concurrently.
+- Java provides below atomic classes.
+  -  AtomicInteger
+  - AtomicLong
+  - AtomicBoolean
+
+#### AtmoicInteger 
+```
+public class AtomicInteger extends Number implements java.io.Serializable
+private volatile int value;
+```
+Example
+```
+import java.util.concurrent.atomic.AtomicInteger;
+
+public class AtmoicIntDemo {
+    public static void main(String[] args) {
+        AtomicInteger atomicInteger = new AtomicInteger(10);
+        atomicInteger.set(50);
+        atomicInteger.lazySet(100);
+        atomicInteger.compareAndSet(100, 101);
+        atomicInteger.decrementAndGet();
+    }
+}
+```
+
+
 ###  Concurrent collection in java 
 Concurrent collections in Java are thread-safe versions of the standard collections provided by the Java Collections Framework. They are designed to be used in concurrent multi-threaded environments where multiple threads access and modify collections simultaneously.
 
