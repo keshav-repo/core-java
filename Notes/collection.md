@@ -732,6 +732,37 @@ public class AtmoicIntDemo {
 }
 ```
 
+### Making Collections thread-safe
+- synchronizedCollection(Collection<T> c)
+- synchronizedList(List<T> list)
+- synchronizedMap(Map<K,V> m)
+- synchronizedSet(Set<T> s)
+- synchronizedSortedMap(SortedMap<K,V> m)
+- synchronizedSortedSet(SortedSet<T> s)
+
+#### Internal Working
+The Collections.synchronizedCollection() method ensures thread safety by wrapping the specified collection in a synchronized wrapper. This wrapper acquires a lock on the collection whenever any method on the wrapper is called. This ensures that only one thread can access the collection at a time, preventing any race conditions.
+- Advantages
+  - It is easy to use.
+  -  It is guaranteed to be thread-safe.
+- Disadvantages
+  - It can have a performance impact.
+  - It does not allow for fine-grained locking.
+
+```
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class SynchronizedListDemo {
+    public static void main(String[] args) {
+        List<String> list = new ArrayList<String>();
+        list.addAll(List.of("A", "B", "C", "D", "E"));
+        List<String> synlist = Collections.synchronizedList(list);
+        System.out.println("Synchronized list is : " + synlist);
+    }
+}
+```
 
 ###  Concurrent collection in java 
 Concurrent collections in Java are thread-safe versions of the standard collections provided by the Java Collections Framework. They are designed to be used in concurrent multi-threaded environments where multiple threads access and modify collections simultaneously.
