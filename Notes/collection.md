@@ -330,9 +330,203 @@ In Java, a linked list-based implementation of a queue is available through the 
 
 Example: [ArrayBlockingQueueDemo](https://github.com/keshav-repo/core-java/blob/master/src/main/java/org/learning/collection/LinkedListQueueExample.java)
 
+### Map: 
+Interface represents a collection that stores key-value pairs. 
+```
+public interface Map<K, V> {
+
+    int size();
+
+    boolean isEmpty();
+
+    boolean containsKey(Object key);
+
+    boolean containsValue(Object value);
+
+    V get(Object key);
+
+    V put(K key, V value);
+
+    V remove(Object key);
+
+    void putAll(Map<? extends K, ? extends V> m);
+
+    void clear();
+
+    Set<K> keySet();
+
+    Collection<V> values();
+
+    Set<Map.Entry<K, V>> entrySet();
+
+    interface Entry<K, V> {
+
+        V getValue();
+
+        V setValue(V value);
+
+        boolean equals(Object o);
+
+        int hashCode();
+
+        public static <K extends Comparable<? super K>, V> Comparator<Map.Entry<K, V>> comparingByKey() {
+          
+        public static <K, V extends Comparable<? super V>> Comparator<Map.Entry<K, V>> comparingByValue() {}
+          
+        public static <K, V> Comparator<Map.Entry<K, V>> comparingByKey(Comparator<? super K> cmp) {}
+    
+        public static <K, V> Comparator<Map.Entry<K, V>> comparingByValue(Comparator<? super V> cmp) {}
+    }
+
+    boolean equals(Object o);
+
+    int hashCode();
+
+    default V getOrDefault(Object key, V defaultValue) {}
+     
+    default void forEach(BiConsumer<? super K, ? super V> action) {}
+
+    default void replaceAll(BiFunction<? super K, ? super V, ? extends V> function) {}
+
+    default V putIfAbsent(K key, V value) {}
+
+    default boolean remove(Object key, Object value) {}
+       
+    default boolean replace(K key, V oldValue, V newValue) {}
+
+    default V replace(K key, V value) {}
+
+    default V computeIfAbsent(K key,Function<? super K, ? extends V> mappingFunction) {}
+        
+    default V computeIfPresent(K key, BiFunction<? super K, ? super V, ? extends V> remappingFunction) {}
+
+    default V compute(K key, BiFunction<? super K, ? super V, ? extends V> remappingFunction) {}
+
+    // If the specified key is not already associated with a value or is associated with null, associates it with the given non-null value. 
+    // Otherwise, replaces the associated value with the results of the given remapping function
+    default V merge(K key, V value,BiFunction<? super V, ? super V, ? extends V> remappingFunction) {}
+
+    static <K, V> Map<K, V> of() {
+        return ImmutableCollections.emptyMap();
+    }
+
+    static <K, V> Map<K, V> of(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5,
+                               K k6, V v6, K k7, V v7, K k8, V v8, K k9, V v9, K k10, V v10) {}
+
+     // returns immutable map
+    static <K, V> Map<K, V> ofEntries(Entry<? extends K, ? extends V>... entries) 
+
+    static <K, V> Map<K, V> copyOf(Map<? extends K, ? extends V> map) {}
+```
+
+Implementation are 
+- HashMap
+- TreeMap 
+- LinkedHashMap
+- ConcurrentHashMap
+- WeakHashMap
+
+#### Internal Working of hashmap
+HashMap is an implementation of the Map interface in Java, which stores key-value pairs. It uses an array of buckets to store the entries, and each bucket can hold multiple entries. When storing a key-value pair, the HashMap computes the hash code of the key to determine the bucket index.
+
+Here is an overview of how HashMap works internally:
+
+1. Hashing: When a key-value pair is added to the HashMap, the hash code of the key is computed using the `hashCode()` method of the key object. The hash code is then used to determine the index of the bucket in which the entry will be stored.
+2. Bucket Storage: HashMap maintains an array of buckets, where each bucket can hold multiple entries. The bucket index is calculated by performing a modulo operation on the hash code with the size of the array. This ensures an even distribution of entries across the buckets.
+3. Collision Handling: Since multiple keys can have the same hash code or map to the same bucket index, HashMap handles collisions by using a linked list (or a balanced tree in Java 8+). If two keys have the same hash code, the entries are stored in a linked list or a tree within the bucket. The linked list or tree is used to resolve collisions and maintain all the key-value pairs.
+4. Retrieving Values: To retrieve a value associated with a key, the hash code of the key is computed, and the bucket index is determined. The linked list or tree within the bucket is traversed to find the entry with the matching key. The `equals()` method is used to compare the keys for equality.
+5. Performance Considerations: The efficiency of HashMap depends on the distribution of the hash codes and the number of collisions. A good hash function and a sufficient number of buckets can help minimize collisions and maintain an average constant-time complexity for operations like `get()` and `put()`. However, in the worst case scenario, where all the keys hash to the same bucket, the performance can degrade to O(n), where n is the number of entries.
+
+####  array of buckets in hashmap 
+```
+    transient Node<K,V>[] table;
+```
+
+#### Difference between hashmap and treemap
+
+1. Ordering: HashMap does not maintain any particular order of the keys or elements. The order in which the elements are retrieved may vary. TreeMap, on the other hand, maintains the keys in sorted order based on their natural ordering or a custom comparator.
+2. Performance: HashMap provides constant-time performance for basic operations like `get()` and `put()`. The performance of HashMap is generally faster compared to TreeMap for most operations. TreeMap, being a sorted map, has a performance of O(log N) for operations like `get()`, `put()`, and `remove()`, where N is the number of elements in the map.
+3. Memory Overhead: HashMap generally has lower memory overhead compared to TreeMap. TreeMap requires additional memory to store the tree structure for maintaining the order of keys.
+
+#### TreeMap
+```
+public class TreeMap<K,V> extends AbstractMap<K,V> implements NavigableMap<K,V>
+```
+1. Data Structure: Red-black tree
+2. Ordering: TreeMap ensures that the keys are always sorted in ascending order based on their natural ordering or a custom comparator. This allows efficient searching, insertion, and deletion operations based on the key.
+3. TreeMap is not thread-safe for concurrent access
+4. Time Complexity: O(log N)
+
+#### Red Black Tree: 
+The red-black tree is a self-balancing binary search tree. It ensures that the tree remains balanced, which guarantees logarithmic time complexity for operations like get(), put(), and remove(). The balancing is achieved by maintaining certain properties such as the color of the nodes and the maximum height difference between the left and right subtrees.
+
+#### Comparison with AVL Tree:
+The AVL trees are more balanced compared to Red-Black Trees, but they may cause more rotations during insertion and deletion. So if your application involves frequent insertions and deletions, then Red-Black trees should be preferred. And if the insertions and deletions are less frequent and search is a more frequent operation, then AVL tree should be preferred over the Red-Black Tree.
+
+#### Time complexity of various operation in Red black tree
+1. Search (get): O(log N)
+2. Insertion (put): O(log N)
+3. Deletion (remove): O(log N)
+4. Minimum/Maximum: O(log N)
+5. Successor/Predecessor: O(log N)
+
+#### LinkedHashMap
+```
+public class LinkedHashMap<K,V> extends HashMap<K,V>  implements Map<K,V>
+```
+- LinkedHashMap is a subclass of HashMap in Java that maintains the insertion order of its elements. It combines the features of a linked list and a hash table, providing both fast retrieval and predictable iteration order.
+- Internally, LinkedHashMap maintains a doubly linked list of entries in addition to the hash table. Each entry in the linked list contains a reference to the previous and next entries, allowing efficient traversal in both directions.
+- When an entry is inserted into a LinkedHashMap, it is appended to the end of the linked list, preserving the order of insertion. Simultaneously, the entry is added to the hash table, using the key's hash code to determine the bucket.
+- When retrieving or updating an entry, the hash table provides the fast access based on the key's hash code. Additionally, the linked list allows for efficient iteration in the order of insertion.
+- The internal implementation of LinkedHashMap uses a combination of a hash table and a linked list to achieve both fast access and predictable iteration order. The linked list provides the order of insertion or access, while the hash table enables efficient retrieval and updates based on the key's hash code.
+
+[youtube](https://youtu.be/dMqPqw6mulY)
+
+#### ConcurrentHashMap
+ConcurrentHashMap in Java is a concurrent and thread-safe implementation of the Map interface. It allows multiple threads to access and modify the map concurrently without explicit synchronization.
+
+Internally, ConcurrentHashMap uses a different mechanism compared to HashMap to achieve thread-safety and high concurrency. Here are some key points about the internal working of ConcurrentHashMap:
+
+1. Hashing: ConcurrentHashMap divides its underlying data structure into segments, each of which acts as a separate hash table. The number of segments is determined by the concurrency level specified during initialization. Each segment is independently locked, allowing concurrent access to different segments.
+
+2. Segment Structure: Each segment in ConcurrentHashMap is similar to a HashMap and consists of an array of hash buckets. Each hash bucket holds a linked list of key-value pairs that have the same hash code. This allows multiple key-value pairs with different hash codes to coexist in the same segment.
+
+3. Read Operations: Read operations, such as get(), do not require any locks or synchronization. Each segment uses a volatile read to access the array of hash buckets, ensuring visibility of the most up-to-date state.
+
+4. Write Operations: Write operations, such as put() and remove(), are performed with the help of locks. Each segment uses a separate lock, allowing concurrent write operations on different segments. This reduces contention and improves concurrency.
+
+5. Lock Granularity: The locking in ConcurrentHashMap is finer-grained compared to a synchronized HashMap. Instead of locking the entire map, only a specific segment is locked during write operations, minimizing contention and allowing concurrent read and write operations to different segments.
+
+6. Expansion and Resizing: ConcurrentHashMap automatically expands and resizes its underlying data structure to maintain a balanced load factor. During resizing, new segments are added, and existing key-value pairs are rehashed and repositioned to the appropriate segments.
+
 ### Concurrent Collection APi
 
 ### Unmodifidable Collection
+```
+public static <T> Collection<T> unmodifiableCollection(Collection<? extends T> c)
+eg. 
+ Collection<Character> immutablelist = Collections.unmodifiableCollection(list);
+```
+
+#### Fail fast and fail safe iterator in java 
+Iterators in java are used to iterate over the Collection objects.Fail-Fast iterators immediately throw ConcurrentModificationException if there is structural modification of the collection. Structural modification means adding, removing any element from collection while a thread is iterating over that collection. Iterator on ArrayList, HashMap classes are some examples of fail-fast Iterator.
+Fail-Safe iterators don’t throw any exceptions if a collection is structurally modified while iterating over it. This is because, they operate on the clone of the collection, not on the original collection and that’s why they are called fail-safe iterators. Iterator on CopyOnWriteArrayList, ConcurrentHashMap classes are examples of fail-safe Iterator.
+source: [g4g](https://www.geeksforgeeks.org/fail-fast-fail-safe-iterators-java/) 
+
+#### Overcome fail fast problem 
+To overcome the fail-fast problem in Java collections, you can take the following approaches:
+
+1. Synchronize Access: Use explicit synchronization to ensure that only one thread at a time can modify the collection while others are iterating over it. You can use synchronized blocks or methods to protect concurrent access to the collection. However, this approach may introduce performance overhead and potential thread contention.
+
+2. Use Thread-Safe Collections: Instead of using standard collections, you can opt for thread-safe alternatives provided by the java.util.concurrent package. For example, ConcurrentHashMap, CopyOnWriteArrayList, and ConcurrentLinkedQueue are designed to handle concurrent access without throwing ConcurrentModificationException. These collections provide built-in thread-safety mechanisms to handle modifications and iterations concurrently.
+
+3. **Use Iterator's remove() Method**: Instead of modifying the collection directly while iterating, you can use the remove() method of the iterator. This ensures that the modification is performed through the iterator itself, avoiding concurrent modification exceptions. However, this approach may not be applicable in all scenarios, as it restricts the types of modifications you can perform.
+
+4. Use Concurrent Collection Views: Some collections, such as ConcurrentHashMap, provide concurrent collection views that allow concurrent modifications while iterating. These views provide a consistent snapshot of the collection at the time of iteration and handle concurrent modifications gracefully without throwing exceptions. For example, ConcurrentHashMap's keySet(), values(), and entrySet() methods return concurrent views that can be safely iterated even with concurrent modifications.
+
+5. Use Immutable Collections: If the collection does not need to be modified after its creation, consider using immutable collections. Immutable collections are inherently thread-safe, as they guarantee that their contents cannot be modified once created. You can create immutable collections using libraries like Guava or Java 9+ with the List.of(), Set.of(), and Map.of() factory methods.
+
+**Note** If you remove an element via Iterator remove() method, exception will not be thrown. However, in case of removing via a particular collection remove() method, ConcurrentModificationException will be thrown. Below code snippet will demonstrate this:
 
 ###  Concurrent collection in java 
 Concurrent collections in Java are thread-safe versions of the standard collections provided by the Java Collections Framework. They are designed to be used in concurrent multi-threaded environments where multiple threads access and modify collections simultaneously.
