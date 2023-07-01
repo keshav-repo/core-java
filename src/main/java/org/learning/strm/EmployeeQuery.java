@@ -45,7 +45,7 @@ public class EmployeeQuery {
         System.out.println(employeeJoinedAfter1015);
 
         // Count the number of employees in each department?
-        Map<String, Long> employeeCountPerDepartment =  employees.stream()
+        Map<String, Long> employeeCountPerDepartment = employees.stream()
                 .collect(Collectors.groupingBy(Employee::getDepartment, Collectors.counting()));
         System.out.println(employeeCountPerDepartment);
 
@@ -59,7 +59,48 @@ public class EmployeeQuery {
 
         System.out.println(youngestMaleEmployeesByDepartment);
 
-        //
+        // Employee most working experience in the organization
+        Employee employeeWithMostExp = employees.stream()
+                .min(Comparator.comparingInt(Employee::getYearOfJoining))
+                .orElseThrow(() -> new RuntimeException("No employee found"));
+        System.out.println(employeeWithMostExp);
+
+        // How many male and female employees are there in the sales and marketing team
+        Map<String, Long> genderCountInMarketingSales = employees.stream()
+                .filter(employee -> employee.getDepartment().equals("Sales And Marketing"))
+                .collect(Collectors.groupingBy(Employee::getGender, Collectors.counting()));
+        System.out.println(genderCountInMarketingSales);
+
+        // List down the names of all employees in each department?
+        Map<String, List<String>> employeesPerdepart = employees.stream()
+                .collect(Collectors.groupingBy(Employee::getDepartment, Collectors.mapping(Employee::getName, Collectors.toList())));
+        System.out.println(employeesPerdepart);
+
+        // What is the average salary and total salary of the whole organization?
+        var salaryAvg = employees.stream()
+                .mapToDouble(Employee::getSalary)
+                .average()
+                .orElse(0.0);
+        System.out.println(salaryAvg);
+
+        double totalSalary = employees.stream()
+                .mapToDouble(Employee::getSalary)
+                .sum();
+        System.out.println(totalSalary);
+
+        // Separate the employees who are younger or equal to 25 years from those employees who are older than 25 years.
+        List<Employee> employeesWithAgeLessThan25 = employees.stream()
+                .filter(employee -> employee.getAge() <= 25)
+                .collect(Collectors.toList());
+        System.out.println(employeesWithAgeLessThan25);
+
+        // Who is the oldest employee in the organization? What is his age and which department he belongs to?
+        Employee oldestEmployee = employees.stream()
+                .max(Comparator.comparingInt(Employee::getAge))
+                .orElse(null);
+        System.out.println(oldestEmployee);
+
+
 
     }
 }

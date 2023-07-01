@@ -72,4 +72,16 @@ output: [4, 5, 3, 4, 4, 5]
 12.  Get the names of all employees who have joined after 2015?
 13. Count the number of employees in each department?
 14. Get the details of youngest male employee in the each department ?
-15. 
+15. Who has the most working experience in the organization
+16. How many male and female employees are there in the sales and marketing team ?
+17. List down the names of all employees in each department? 
+18. What is the average salary and total salary of the whole organization?
+19. Separate the employees who are younger or equal to 25 years from those employees who are older than 25 years.
+20. Who is the oldest employee in the organization? What is his age and which department he belongs to?
+
+### Paralle Computing 
+1. Get sum of square of number between 1 to 1000000 using parallel computing. 
+- solution: ParallelComputingExample.java, SquareOfRange.java
+2. Get sum of values from array. 
+3. 
+

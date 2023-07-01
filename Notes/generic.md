@@ -149,7 +149,7 @@ NO
 10. Can we use Generics with Array?
 - No, we cannot use generics with arrays in Java. This is because arrays are implicitly typed, meaning that the type of the elements in an array is determined at compile time. Generics, on the other hand, are explicitly typed, meaning that the type of the elements in a generic collection is determined at runtime.
 - 
-11.ss 
+11.
 
 
 
