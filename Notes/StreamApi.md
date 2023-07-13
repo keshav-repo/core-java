@@ -78,6 +78,7 @@ output: [4, 5, 3, 4, 4, 5]
 18. What is the average salary and total salary of the whole organization?
 19. Separate the employees who are younger or equal to 25 years from those employees who are older than 25 years.
 20. Who is the oldest employee in the organization? What is his age and which department he belongs to?
+21. Increase the salary of each employee by 100 
 
 ### Paralle Computing 
 1. Get sum of square of number between 1 to 1000000 using parallel computing. 

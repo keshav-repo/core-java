@@ -100,6 +100,11 @@ public class EmployeeQuery {
                 .orElse(null);
         System.out.println(oldestEmployee);
 
+        // Increase the salary of each employee by 100
+        employees = employees.stream()
+                .map(employee -> new Employee(employee.id, employee.name, employee.age, employee.gender, employee.department, employee.yearOfJoining, employee.getSalary() + 100))
+                .collect(Collectors.toList());
+
 
 
     }

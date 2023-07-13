@@ -116,6 +116,23 @@ Please note that the `exec()` method can also take an array of strings to specif
 
 Overall, the `Runtime` class provides essential functionality for interacting with the runtime environment and executing system commands from within a Java program.
 
+### Algorithm used by gc
+In Java, there are several garbage collection algorithms used by different garbage collectors. The choice of the garbage collector algorithm depends on factors such as JVM version, runtime configuration, and the type of application. Here are some commonly used garbage collection algorithms in Java:
+
+1. **Serial Collector**: The Serial Collector is a simple, single-threaded garbage collector. It uses a "stop-the-world" approach, where all application threads are paused during garbage collection. It is suitable for small applications or environments with limited resources.
+
+2. **Parallel Collector**: The Parallel Collector is similar to the Serial Collector but uses multiple threads for garbage collection. It reduces garbage collection pause times by utilizing multiple CPU cores for parallel garbage collection. It is designed for throughput-oriented applications.
+
+3. **CMS (Concurrent Mark-Sweep) Collector**: The CMS Collector is a concurrent garbage collector that aims to reduce the pause times caused by garbage collection. It performs most of the garbage collection work concurrently with the application threads. It is suitable for applications that require low latency and can tolerate some CPU overhead.
+
+4. **G1 (Garbage-First) Collector**: The G1 Collector is a server-style garbage collector introduced in Java 7. It is designed to provide predictable garbage collection pause times while maintaining high throughput. It divides the heap into multiple regions and uses a combination of concurrent and parallel phases to perform garbage collection. It is suitable for large heaps and applications that require low latency.
+
+5. **ZGC (Z Garbage Collector)**: The ZGC is a scalable garbage collector introduced in Java 11. It is designed to handle very large heaps (multi-terabyte) with ultra-low pause times. It utilizes concurrent and incremental techniques to perform garbage collection without significant impact on application performance.
+
+6. **Shenandoah Collector**: The Shenandoah Collector is another garbage collector introduced in Java 11. It is designed to provide consistently low pause times even with large heaps. It employs a concurrent garbage collection algorithm with a focus on reducing pause times.
+
+Note that the availability of these garbage collectors and their specific configurations may vary depending on the Java version and JVM implementation you are using. Additionally, garbage collection behavior and algorithms can be tuned and customized through various JVM options and flags.
+
 ### References
 -https://java-questions.com/garbagecollection-interview-questions.html
 
