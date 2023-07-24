@@ -1,9 +1,6 @@
 package org.learning.collection;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /*
 1. merge: example using two map
@@ -73,6 +70,8 @@ public class MapDemo {
         // Using putIfAbsent()
         evenNumbers.putIfAbsent("Six", 6);
         System.out.println("TreeMap of even numbers: " + evenNumbers);
+
+        Hashtable<String, String> hashtable ;
 
 
     }

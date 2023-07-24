@@ -1,8 +1,8 @@
 ### What is a collection ?
-The root interface in the collection hierarchy. A collection represents a group of objects, known as its elements.
+The root interface in the collection hierarchy.** A collection represents a group of objects, known as its elements**.
 
 - The default method implementations (inherited or otherwise) do not apply any synchronization protocol. If a Collection implementation has a specific synchronization protocol, then it must override default implementations to apply that protocol.
-- Certain methods are specified to be optional. If a collection implementation doesn't implement a particular operation, it should define the corresponding method to throw UnsupportedOperationException. Such methods are marked "optional operation" in method specifications of the collections interfaces.
+- Certain methods are specified to be optional. If a collection implementation doesn't implement a particular operation, it should define the corresponding method to throw **UnsupportedOperationException**. Such methods are marked "optional operation" in method specifications of the collections interfaces.
 - Some collection implementations have restrictions on the elements that they may contain. For example, some implementations prohibit null elements, and some have restrictions on the types of their elements. Attempting to add an ineligible element throws an unchecked exception, typically NullPointerException or ClassCastException
 ```
 public interface Collection<E> extends Iterable<E> 
@@ -474,7 +474,7 @@ The AVL trees are more balanced compared to Red-Black Trees, but they may cause 
 ```
 public class LinkedHashMap<K,V> extends HashMap<K,V>  implements Map<K,V>
 ```
-- LinkedHashMap is a subclass of HashMap in Java that maintains the insertion order of its elements. It combines the features of a linked list and a hash table, providing both fast retrieval and predictable iteration order.
+- **LinkedHashMap is a subclass of HashMap in Java that maintains the insertion order of its elements. It combines the features of a linked list and a hash table, providing both fast retrieval and predictable iteration order.**
 - Internally, LinkedHashMap maintains a doubly linked list of entries in addition to the hash table. Each entry in the linked list contains a reference to the previous and next entries, allowing efficient traversal in both directions.
 - When an entry is inserted into a LinkedHashMap, it is appended to the end of the linked list, preserving the order of insertion. Simultaneously, the entry is added to the hash table, using the key's hash code to determine the bucket.
 - When retrieving or updating an entry, the hash table provides the fast access based on the key's hash code. Additionally, the linked list allows for efficient iteration in the order of insertion.
@@ -595,7 +595,9 @@ public class TreeSet<E> extends AbstractSet<E>
 - time complexity O(log n)
 
 ### LinkedHasSet 
-The LinkedHashSet is an ordered version of HashSet that maintains a doubly-linked List across all elements.
+- The LinkedHashSet is an ordered version of HashSet that maintains a doubly-linked List across all elements.
+- It maintains the insetion order 
+- 
 
 ### CopyOnWriteArraySet
 - It is a Set that uses an internal CopyOnWriteArrayList for all of its operations

@@ -1,0 +1,129 @@
+Certainly! Here are a few more tricky object-oriented programming questions in Java:
+
+1. What is the difference between method overriding and method overloading?
+2. Explain the concept of encapsulation and how it is achieved in Java.
+3. What is the purpose of the `equals()` and `hashCode()` methods in Java? How are they related?
+4. What is a static nested class in Java? How is it different from an inner class?
+5. How does the `final` keyword work in Java? Explain its usage with variables, methods, and classes.
+6. What is the difference between composition and inheritance? When would you prefer one over the other?
+7. Explain the concept of polymorphism in Java. Provide an example demonstrating runtime polymorphism.
+8. What is the `super` keyword in Java? How is it used in constructors and method overriding?
+9. What is the Java interface? How is it different from an abstract class?
+10. What are the access modifiers in Java (e.g., `public`, `private`, `protected`)? Explain their differences and use cases.
+
+These questions cover various aspects of object-oriented programming in Java and can help assess your understanding of key concepts. Make sure to have a solid grasp of inheritance, polymorphism, encapsulation, and other fundamental 
+
+
+Explanation of Java collection framework hierarchy and unique features of list, set, and map interfaces for interview preparation.
+
+[00:00](https://www.youtube.com/watch?v=KfoNYoVUBJI&t=0) Explanation of Collection Hierarchy in Java
+
+[03:48](https://www.youtube.com/watch?v=KfoNYoVUBJI&t=228) Explanation of different collection classes in Java
+
+[07:18](https://www.youtube.com/watch?v=KfoNYoVUBJI&t=438) Different interfaces and classes in Java Collections
+
+[10:42](https://www.youtube.com/watch?v=KfoNYoVUBJI&t=642) Summary of Collection Interfaces
+
+[13:56](https://www.youtube.com/watch?v=KfoNYoVUBJI&t=836) Map is an integral part of Java Collection Framework
+
+[17:02](https://www.youtube.com/watch?v=KfoNYoVUBJI&t=1022) Concurrent package provides thread-safe blocking queues and collections
+
+[20:30](https://www.youtube.com/watch?v=KfoNYoVUBJI&t=1230) Hash map works on hashing principle in Java
+
+[23:46](https://www.youtube.com/watch?v=KfoNYoVUBJI&t=1426) Collision handling in hash table using linked lists
+
+---------------------------------
+
+Detailed Summary for [Java collections framework interview questions | [MOST ASKED COLLECTIONS INTERVIEW QUESTION]](https://www.youtube.com/watch?v=KfoNYoVUBJI) by [Merlin](https://merlin.foyer.work/)
+
+[00:00](https://www.youtube.com/watch?v=KfoNYoVUBJI&t=0) Explanation of Collection Hierarchy in Java
+- Collection hierarchy starts with Collection interface which is a root of the collection framework in Java.
+- List, Set, Queue and Map are the three basic interfaces which implement or extend Collection interface.
+
+[03:48](https://www.youtube.com/watch?v=KfoNYoVUBJI&t=228) Explanation of different collection classes in Java
+- ArrayList and LinkedList are two different classes that implement the List interface. ArrayList resizes by 50% while LinkedList maintains insertion order and is non-synchronized.
+- Vector is a legacy class that is thread-safe and increases its size by doubling its array size.
+- Stack is a class that implements the last in, first out (LIFO) data structure.
+- The Set interface is implemented by HashSet, LinkedHashSet, and TreeSet. HashSet implicitly implements a hash table and contains only unique elements. LinkedHashSet maintains insertion order while TreeSet is sorted.
+
+[07:18](https://www.youtube.com/watch?v=KfoNYoVUBJI&t=438) Different interfaces and classes in Java Collections
+- HashSet maintains doubly linked list for insertion order
+- SortedSet stores elements in ascending order using Comparable interface
+- TreeSet uses Red-Black tree for sorting and retrieval
+- PriorityQueue serves elements based on priority
+- ArrayDeque is a doubly ended queue for adding and removing elements from either end
+
+[10:42](https://www.youtube.com/watch?v=KfoNYoVUBJI&t=642) Summary of Collection Interfaces
+- Queue interface has a resizable array implementation with no capacity restriction.
+- Map interface is unique and does not extend the Collection interface, and has key-value pair structure.
+
+[13:56](https://www.youtube.com/watch?v=KfoNYoVUBJI&t=836) Map is an integral part of Java Collection Framework
+- Map supports key-value pairs and is unique in the Collection Framework
+- Fail-fast and fail-safe iterators differ in how they handle concurrent modification
+- Blocking Queue is a Java interface for first-in, first-out queues
+
+[17:02](https://www.youtube.com/watch?v=KfoNYoVUBJI&t=1022) Concurrent package provides thread-safe blocking queues and collections
+- Blocking queues prevent concurrency issues with multiple threads inserting and taking data
+- Synchronous and concurrent collections both provide thread safety, but concurrent collections achieve it more efficiently through lock stripping
+
+[20:30](https://www.youtube.com/watch?v=KfoNYoVUBJI&t=1230) Hash map works on hashing principle in Java
+- Hash function links key-value pair and generates index
+- Map.Entry object stores key-value pair in hash table
+
+[23:46](https://www.youtube.com/watch?v=KfoNYoVUBJI&t=1426) Collision handling in hash table using linked lists
+- Linked list is created when multiple keys generate the same index
+- Get method checks every key of every node using equals method to search the correct value
+
+
+
+---------------------------------------------------------------------------------------------
+ // Query 1 : How many male and female employees are there in the organization?
+        method1();
+        System.out.println("\n");
+        // Query 2 : Print the name of all departments in the organization?
+        method2();
+        System.out.println("\n");
+        // Query 3 : What is the average age of male and female employees?
+        method3();
+        System.out.println("\n");
+        // Query 4 : Get the details of highest paid employee in the organization?
+        method4();
+        System.out.println("\n");
+        // Query 5 : Get the names of all employees who have joined after 2015?
+        method5();
+        System.out.println("\n");
+        // Query 6 : Count the number of employees in each department?
+        method6();
+        System.out.println("\n");
+        // Query 7 : What is the average salary of each department?
+        method7();
+        System.out.println("\n");
+        // Query 8 : Get the details of youngest male employee in the product
+        // development department?
+        method8();
+        System.out.println("\n");
+        // Query 9 : Who has the most working experience in the organization?
+        method9();
+        System.out.println("\n");
+        // Query 10 : How many male and female employees are there in the sales and
+        // marketing team?
+        method10();
+        System.out.println("\n");
+        // Query 11 : What is the average salary of male and female employees?
+        method11();
+        System.out.println("\n");
+        // Query 12 : List down the names of all employees in each department?
+        method12();
+        System.out.println("\n");
+        // Query 13 : What is the average salary and total salary of the whole
+        // organization?
+        method13();
+        System.out.println("\n");
+        // Query 14 : Separate the employees who are younger or equal to 25 years from
+        // those employees who are older than 25 years.
+        method14();
+        System.out.println("\n");
+        // Query 15 : Who is the oldest employee in the organization? What is his age
+        // and which department he belongs to?
+        method15();
+
