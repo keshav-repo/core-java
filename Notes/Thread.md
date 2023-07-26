@@ -75,7 +75,7 @@ In the above example, a `Callable` task is defined using a lambda expression. It
 The `Callable` interface is useful when you need to perform asynchronous computations, obtain results from concurrent tasks, or 
 handle exceptions thrown by the tasks. It provides a flexible way to work with concurrent and parallel programming in Java.
 
-#### 2. ExecutorService
+#### 2. Executor Service
 
 The `ExecutorService` interface is a part of the `java.util.concurrent` package in Java. It provides a high-level interface for managing and executing tasks asynchronously using a thread pool. It is an extension of the `Executor` interface and provides additional methods for task execution and termination.
 
@@ -360,7 +360,7 @@ In this example, the `waitForCondition()` method waits until the `conditionMet` 
 
 Using `Condition` objects provides a more fine-grained and powerful mechanism for thread coordination and synchronization, allowing you to implement more complex communication patterns between threads.
 
-## My laptop processor is i5-11300H of 11th Generation. Base speed is 3.10 GHz. Ram is 15.8 usable. I am running a java program where I am using ExecutorService. So what is the maximum size of thread pool that i can create.
+## 9. My laptop processor is i5-11300H of 11th Generation. Base speed is 3.10 GHz. Ram is 15.8 usable. I am running a java program where I am using ExecutorService. So what is the maximum size of thread pool that i can create.
 
 The maximum size of the thread pool you can create for your Java program using `ExecutorService` depends on several factors, including the number of available CPU cores, the nature of your tasks, and the memory requirements of each task.
 
@@ -383,6 +383,165 @@ Keep in mind that if your tasks are heavily I/O-bound (e.g., waiting for externa
 
 Remember to always monitor the performance of your application and adjust the thread pool size accordingly to find the optimal configuration for your specific use case.
 
+## 10. Blocking Queue 
+java.util.concurrent.BlockingQueue is a Queue that supports operations that wait for the queue to become non-empty when retrieving and removing an element, and wait for space to become available in the queue when adding an element.
+
+- BlockingQueue doesn’t accept null values and throw NullPointerException if you try to store null value in the queue. 
+- BlockingQueue implementations are thread-safe. All queuing methods are atomic in nature and use internal locks or other forms of concurrency control. 
+- BlockingQueue interface is part of the Java collections framework and it’s primarily used for implementing the producer-consumer problem. 
+- Java provides several BlockingQueue implementations such as LinkedBlockingQueue, ArrayBlockingQueue, PriorityBlockingQueue
+```java
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ArrayBlockingQueue;
+
+public class BlockingQueueExample {
+
+    public static void main(String[] args) {
+        // Create a blocking queue with a capacity of 5
+        BlockingQueue<Integer> blockingQueue = new ArrayBlockingQueue<>(5);
+
+        // Create a producer thread to add elements to the queue
+        Thread producerThread = new Thread(() -> {
+            try {
+                for (int i = 1; i <= 10; i++) {
+                    System.out.println("Producing: " + i);
+                    blockingQueue.put(i);
+                    Thread.sleep(1000);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        // Create a consumer thread to remove elements from the queue
+        Thread consumerThread = new Thread(() -> {
+            try {
+                for (int i = 1; i <= 10; i++) {
+                    int value = blockingQueue.take();
+                    System.out.println("Consuming: " + value);
+                    Thread.sleep(2000);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        // Start both producer and consumer threads
+        producerThread.start();
+        consumerThread.start();
+
+        // Wait for both threads to finish
+        try {
+            producerThread.join();
+            consumerThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+## 11. what is Future object ? 
+In Java, a `Future` object represents the result of an asynchronous computation or task that is being executed in a separate thread. It is a part of the `java.util.concurrent` package and is typically used with `ExecutorService` to submit tasks for asynchronous execution.
+
+When you submit a task to an `ExecutorService`, it returns a `Future` object immediately, which can be **used to retrieve the result of the computation once it is completed**. The `Future` interface provides methods to **check if the computation is done, retrieve the result, or cancel the task if needed.**
+
+Here are some of the important methods provided by the `Future` interface:
+
+1. `boolean isDone()`: Checks if the computation is complete, i.e., if the task has finished execution.
+
+2. `boolean cancel(boolean mayInterruptIfRunning)`: Attempts to cancel the execution of the task. The `mayInterruptIfRunning` parameter determines whether the thread executing the task should be interrupted to cancel the task.
+
+3. `boolean isCancelled()`: Checks if the task has been canceled.
+
+4. `V get() throws InterruptedException, ExecutionException`: Waits for the computation to complete and returns the result. If the computation is not done yet, this method blocks until the result is available. If the computation is canceled or encounters an exception, this method throws `ExecutionException`.
+
+5. `V get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException`: Similar to the `get()` method, but with an additional timeout parameter. It waits for the computation to complete within the specified time, and if the result is not available within the timeout, it throws a `TimeoutException`.
+
+Using `Future` objects, you can submit multiple tasks for asynchronous execution, and then later retrieve the results of these tasks as they complete. This allows you to perform concurrent and parallel processing, making better use of available resources and improving the overall performance of your application.
+
+## 12. can we add callback using Future object ? 
+No, the standard `Future` object in Java does not directly support adding callbacks. The `Future` interface provides a way to retrieve the result of a computation that may not have completed yet, but it doesn't offer a built-in mechanism for attaching callbacks or handling completion events.
+
+To add a callback for a `Future` object, you typically need to use an additional mechanism, such as `CompletableFuture`, which is a more advanced and flexible implementation of the `Future` interface introduced in Java 8. `CompletableFuture` provides various methods to handle completion events and attach callbacks directly to the future.
+
+Here's an example of how to use `CompletableFuture` to add a callback for a future:
+
+```java
+import java.util.concurrent.*;
+
+public class CallbackWithCompletableFuture {
+
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
+        Callable<Integer> task = () -> {
+            // Simulate some computation
+            Thread.sleep(2000);
+            return 42;
+        };
+
+        CompletableFuture<Integer> future = CompletableFuture.supplyAsync(task, executorService);
+
+        // Attach a callback to the CompletableFuture
+        future.thenAccept(result -> System.out.println("Callback Result: " + result));
+
+        executorService.shutdown();
+    }
+}
+```
+
+In this example, we use `CompletableFuture.supplyAsync()` to submit a task asynchronously, and then we chain a callback using the `thenAccept()` method. The `thenAccept()` method takes a `Consumer` that processes the result of the computation when it completes. In this case, the callback simply prints the result.
+
+By using `CompletableFuture`, you can easily handle the completion of the future and define actions to be taken when the computation is finished, making it a powerful tool for working with asynchronous tasks and adding callbacks in Java.
+
+## 13. Future Task ? 
+The `FutureTask` class in Java is a useful utility class that implements both the `Runnable` and `Future` interfaces. It represents a computation that may be running asynchronously and produces a result that can be retrieved later. It is typically used in combination with the `Executor` framework to execute tasks in a multi-threaded environment.
+
+`FutureTask` allows you to wrap a computation or a task that returns a result into a `Runnable` object that can be submitted to an `ExecutorService`. It acts as a placeholder for the result of the computation and provides methods to check if the computation is complete, retrieve the result (if available), or block and wait for the result if it's not ready yet.
+
+The main benefit of using `FutureTask` is that it provides a way to offload a potentially time-consuming task to a separate thread and then continue with other operations. The main thread can check the status of the task and retrieve the result later when needed, without being blocked.
+
+Here's a simple example of how to use `FutureTask`:
+
+```java
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+
+public class FutureTaskExample {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
+        // Create a FutureTask with a Callable
+        FutureTask<Integer> futureTask = new FutureTask<>(new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                // Simulate some computation
+                Thread.sleep(2000);
+                return 42;
+            }
+        });
+
+        // Create a Thread to run the FutureTask
+        Thread thread = new Thread(futureTask);
+        thread.start();
+
+        // Do other tasks here while the computation is running...
+
+        // Wait for the result of the computation and retrieve it
+        int result = futureTask.get();
+
+        System.out.println("Computation Result: " + result);
+    }
+}
+```
+
+In this example, we create a `FutureTask` with a `Callable<Integer>` that represents a computation that returns an integer result. We then create a separate thread to execute the `FutureTask`, which starts the computation asynchronously. The main thread can continue with other tasks while the computation is running. Finally, we use the `get()` method of `FutureTask` to block and wait for the result of the computation.
+
+`FutureTask` provides a convenient way to manage asynchronous tasks and retrieve their results when needed. It's often used in combination with the `Executor` framework for better control over the execution of tasks in a multi-threaded environment.
+
+## 14. Concurrent class 
+- ConcurrentHashMap, CopyOnWriteArrayList and CopyOnWriteArraySet
+- Concurrent Collection classes support full concurrency of retrievals and adjustable expected concurrency for updates.
+
+## 15 
 
 
 
