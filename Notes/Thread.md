@@ -72,7 +72,8 @@ public class CallableExample {
 
 In the above example, a `Callable` task is defined using a lambda expression. It sleeps for 2 seconds and returns the string "Hello, World!". The task is submitted to an `ExecutorService` using the `submit()` method, which returns a `Future` object. The `get()` method is used to retrieve the result of the task.
 
-The `Callable` interface is useful when you need to perform asynchronous computations, obtain results from concurrent tasks, or handle exceptions thrown by the tasks. It provides a flexible way to work with concurrent and parallel programming in Java.
+The `Callable` interface is useful when you need to perform asynchronous computations, obtain results from concurrent tasks, or 
+handle exceptions thrown by the tasks. It provides a flexible way to work with concurrent and parallel programming in Java.
 
 #### 2. ExecutorService
 
@@ -359,7 +360,28 @@ In this example, the `waitForCondition()` method waits until the `conditionMet` 
 
 Using `Condition` objects provides a more fine-grained and powerful mechanism for thread coordination and synchronization, allowing you to implement more complex communication patterns between threads.
 
-## 
+## My laptop processor is i5-11300H of 11th Generation. Base speed is 3.10 GHz. Ram is 15.8 usable. I am running a java program where I am using ExecutorService. So what is the maximum size of thread pool that i can create.
+
+The maximum size of the thread pool you can create for your Java program using `ExecutorService` depends on several factors, including the number of available CPU cores, the nature of your tasks, and the memory requirements of each task.
+
+As a general rule of thumb, it's not recommended to create a thread pool with a size larger than the number of available CPU cores on your system. This is because creating more threads than there are CPU cores can lead to excessive context switching and reduced performance due to the overhead of managing too many threads.
+
+In your case, your laptop processor, the Intel Core i5-11300H, has 4 cores and 8 threads (due to Hyper-Threading). Therefore, it's generally a good idea to limit the thread pool size to the number of CPU cores or slightly lower to allow for other background processes and system tasks to run efficiently.
+
+You can calculate an appropriate thread pool size by considering the number of available CPU cores, the nature of your tasks (CPU-bound or I/O-bound), and any other concurrent processes running on your system.
+
+For example, to set the thread pool size to the number of CPU cores, you can use the following code:
+
+```java
+int availableProcessors = Runtime.getRuntime().availableProcessors();
+ExecutorService executorService = Executors.newFixedThreadPool(availableProcessors);
+```
+
+This will create a thread pool with a size equal to the number of available CPU cores on your system, which is usually a good starting point.
+
+Keep in mind that if your tasks are heavily I/O-bound (e.g., waiting for external resources, such as reading/writing to files or making network requests), you might be able to use a larger thread pool without significantly affecting performance.
+
+Remember to always monitor the performance of your application and adjust the thread pool size accordingly to find the optimal configuration for your specific use case.
 
 
 
