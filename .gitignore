@@ -2,3 +2,4 @@
 .target*
 target
 bkp
+src/main/java/core
