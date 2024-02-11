@@ -12,5 +12,6 @@ a[] = { 1, 423, 6, 46, 34, 23, 13, 53, 4 };
 input: {4, 5, 1, 2 }
 output: { 2, 1, 5, 4 }
 ```
-
+[solution](https://github.com/keshav-repo/core-java/tree/master/src/main/java/org/learning/problem/ReverseArray.java)
+<br>
 3. 
