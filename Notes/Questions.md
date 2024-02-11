@@ -6,6 +6,7 @@
 a[] = { 1, 423, 6, 46, 34, 23, 13, 53, 4 };
 ```
 [solution](https://github.com/keshav-repo/core-java/tree/master/src/main/java/org/learning/problem/MaximumMinimumInArray.java)
+<br>
 2. Write a program to reverse array 
 ```
 input: {4, 5, 1, 2 }
