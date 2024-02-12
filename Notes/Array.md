@@ -4,7 +4,7 @@
 data structure that stores a fixed-size collection of elements of the same type. Arrays are widely used in Java for storing and manipulating data.
 
 #### Important points
-1. declaration and inittialisation in different lines
+1. declaration and initialisation in different lines
 ```java
  int[] myArray; // declaration
  myArray = new int[5]; // initialisation
@@ -37,12 +37,22 @@ while (x>-1){
     x = x -1;
 }
 ```
-6. Declaration and initialization in one line
+6. Declaration and initialization of array in one line
+```java
+int[] myArray = new int[5];
+myArray[0] = 0;
+myArray[1] = 1;
+myArray[2] = 2;
+```
+7. Declaration and initialization in one line with values
 ```java
 int[] myArray = new int[]{1, 2, 3, 4, 5};
 // for(int i=0; i<myArray.length; i++){
     System.out.println(myArray[i]);
 }
+
+// or we can write as 
+int[] myArray = {1, 2, 3, 4, 5};
 ```
 7. for-each way of iteration 
 ```java
