@@ -1,10 +1,7 @@
 package org.learning.strm;
 
 import java.text.DecimalFormat;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -104,6 +101,13 @@ public class EmployeeQuery {
         employees = employees.stream()
                 .map(employee -> new Employee(employee.id, employee.name, employee.age, employee.gender, employee.department, employee.yearOfJoining, employee.getSalary() + 100))
                 .collect(Collectors.toList());
+
+
+        // get a employee
+       Optional<Employee> employeeSearch = employees.stream()
+                .filter(employee -> employee.getId() == 111)
+                .findFirst();
+
 
 
 

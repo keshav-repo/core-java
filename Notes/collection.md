@@ -172,7 +172,8 @@ vector.add("Orange");
     }
 }
 ```
-[stackoverflow](https://stackoverflow.com/a/2950898/7502769)
+- [stackoverflow](https://stackoverflow.com/a/2950898/7502769)
+- [g4g](https://medium.com/@reetesh043/the-copyonwritearraylist-internals-a-deep-dive-ff3ebad87697#:~:text=CopyOnWriteArrayList%20provides%20a%20thread%2Dsafe,consistency%20and%20isolation%20for%20readers.)
 
 #### transient and volatile Keyword
 Using volatile is yet another way (like synchronized, atomic wrapper) of making class thread-safe. Thread-safe means that a method or class instance can be used by multiple threads at the same time without any problem.

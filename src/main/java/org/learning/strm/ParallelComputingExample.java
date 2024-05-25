@@ -6,8 +6,6 @@ import java.util.stream.IntStream;
 
 public class ParallelComputingExample {
     public static void main(String[] args) {
-
-
         int sumOfSquares = IntStream.range(1, 1_000_000)
                 .parallel()
                 .map(n-> n*n)
