@@ -2,7 +2,6 @@ package org.learning.strm;
 
 import java.text.DecimalFormat;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class EmployeeQuery {
@@ -104,10 +103,55 @@ public class EmployeeQuery {
 
 
         // get a employee
-       Optional<Employee> employeeSearch = employees.stream()
+        Optional<Employee> employeeSearch = employees.stream()
                 .filter(employee -> employee.getId() == 111)
                 .findFirst();
 
+        // employee with second highest salary
+        Employee employee = employees.stream()
+                .sorted(Comparator.comparing(Employee::getSalary).reversed())
+                .skip(1).findFirst().get();
+
+        // employee with second highest salary
+        Employee employee3 =  employees.stream()
+                .sorted(Comparator.comparing(Employee::getSalary).reversed())
+                .skip(1).findFirst().get();
+        System.out.println(employee);
+
+        //  Sort the employee with the salary they earn
+        List<Employee> sortedEmployeeBySalary =  employees.stream().sorted(Comparator.comparing(Employee::getSalary))
+                .collect(Collectors.toList());
+        System.out.println(sortedEmployeeBySalary);
+
+        // Get me employee name with max salary in each department
+        Map<String, String> employeeNameByMaxSalaryPerDept = employees.stream()
+                .collect(Collectors.groupingBy(Employee::getDepartment, Collectors.maxBy(Comparator.comparingDouble(Employee::getSalary))))
+                .entrySet().stream()
+                .filter(entry -> entry.getValue().isPresent() == true)
+                .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().get().name));
+
+        System.out.println(employeeNameByMaxSalaryPerDept);
+
+        //  Find average salary in each department.
+        Map<String, Double> averageSalaryInEachDept =  employees.stream()
+                .collect(Collectors.groupingBy(Employee::getDepartment, Collectors.averagingDouble(Employee::getSalary)));
+        System.out.println(averageSalaryInEachDept);
+
+
+        // Find the employees whose department is Product Development and sort them by their experience level, with the most experienced people listed first.
+        List<Employee> productDevelopmentEmployeeWithExperiance = employees.stream()
+                .filter(e -> e.getDepartment()=="Product Development")
+                .sorted(Comparator.comparingInt(Employee::getYearOfJoining))
+                .collect(Collectors.toList());
+        System.out.println(productDevelopmentEmployeeWithExperiance);
+
+        // Find the department which has maximum number of employee.
+        Map.Entry<String, Long> deptWithMaxEmployee = employees.stream()
+                .collect(Collectors.groupingBy(Employee::getDepartment, Collectors.counting()))
+                .entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .get();
+        System.out.println(deptWithMaxEmployee);
 
 
 

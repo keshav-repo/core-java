@@ -1,20 +1,34 @@
 package org.learning.problem;
 
-/*
-In a array of 4 size store four values in it from human input and consider those 4 values are the 4 length of the rectangle.
-Please a logic to find out the area for the same[write the program in eclipse and copy paste the program here]
- */
+import java.util.concurrent.RecursiveAction;
 
-import java.util.Scanner;
+class SimpleRecursiveAction extends RecursiveAction {
+    private int simulatedWork;
+    public SimpleRecursiveAction(int simulatedWork) {
+        this.simulatedWork = simulatedWork;
+    }
+    @Override
+    protected void compute() {
+        // if the task is too large then we split it and execute the tasks in parallel
+        if (simulatedWork > 100) {
+
+            System.out.println("Parallel execution and split the tasks..." + simulatedWork);
+
+            SimpleRecursiveAction action1 = new SimpleRecursiveAction(simulatedWork / 2);
+            SimpleRecursiveAction action2 = new SimpleRecursiveAction(simulatedWork / 2);
+
+            invokeAll(action1, action2);
+        } else {
+            System.out.println("The task is rather small so sequential execution is fine ... ");
+            System.out.println("The size of the task: " + simulatedWork);
+        }
+    }
+}
 
 public class Test {
     public static void main(String[] args) {
-        int[] myArray = new int[4];
-        Scanner sc = new Scanner(System.in);
-        for(int i=0; i<4; i++){
-            myArray[i] = sc.nextInt();
-        }
-        int area = myArray[0]*myArray[1];
-        System.out.println(area);
+        // ForkJoinPool pool = new ForkJoinPool();
+        SimpleRecursiveAction action = new SimpleRecursiveAction(800);
+        action.invoke();
     }
 }
